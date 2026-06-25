@@ -1,0 +1,613 @@
+# TripKart
+
+# Volume 5 – Data Architecture & API Contract
+
+**Version:** 1.0
+
+**Platform:** SwiftUI
+
+**Architecture:** Plugin-Based Travel Engine
+
+---
+
+# 1. Purpose
+
+This document defines how TripKart stores, manages, and exchanges data.
+
+The goal is to ensure that the application can switch from local dummy JSON to REST APIs without changing the UI or business logic.
+
+The Data Layer is responsible for:
+
+* Local JSON
+* Repository Pattern
+* Data Mapping
+* Future REST APIs
+* Local Persistence
+* Caching
+
+---
+
+# 2. Data Flow
+
+Every feature follows the same flow.
+
+```text
+SwiftUI View
+
+↓
+
+ViewModel
+
+↓
+
+UseCase
+
+↓
+
+Repository
+
+↓
+
+Data Source
+
+↓
+
+JSON / API
+
+↓
+
+Repository
+
+↓
+
+ViewModel
+
+↓
+
+UI
+```
+
+Views never know whether data comes from JSON or APIs.
+
+---
+
+# 3. Data Sources
+
+TripKart supports multiple data sources.
+
+Current
+
+* Local JSON
+
+Future
+
+* REST API
+* Cache
+* SwiftData
+* Cloud Sync
+
+Repository decides which source to use.
+
+---
+
+# 4. JSON Folder Structure
+
+```text
+Resources
+
+DummyData
+
+├── cities.json
+├── airports.json
+├── bus_routes.json
+├── flight_routes.json
+├── bookings.json
+├── travellers.json
+├── users.json
+├── offers.json
+├── coupons.json
+├── payment_methods.json
+├── recent_searches.json
+├── notifications.json
+├── settings.json
+└── plugin_configuration.json
+```
+
+Each file represents one business entity.
+
+---
+
+# 5. Core Domain Models
+
+The application revolves around a few core models.
+
+## User
+
+* id
+* name
+* phone
+* email
+* avatar
+
+---
+
+## Traveller
+
+* id
+* firstName
+* lastName
+* age
+* gender
+* documentNumber
+
+---
+
+## City
+
+* id
+* name
+* state
+* country
+* code
+
+---
+
+## TravelRoute
+
+Common model used by every plugin.
+
+Contains
+
+* source
+* destination
+* duration
+* distance
+
+---
+
+## Trip
+
+Common parent model.
+
+Contains
+
+* id
+* pluginType
+* operator
+* departure
+* arrival
+* price
+* availability
+
+Bus and Flight extend this through metadata.
+
+---
+
+## Booking
+
+Contains
+
+* bookingId
+* user
+* trip
+* travellers
+* payment
+* status
+* createdAt
+
+---
+
+## Ticket
+
+Contains
+
+* booking
+* qrCode
+* metadata
+
+Metadata changes based on plugin.
+
+---
+
+# 6. Plugin Metadata
+
+Every plugin provides additional information.
+
+Bus
+
+* Seat Number
+* Boarding Point
+* Bus Type
+
+Flight
+
+* Airline
+* Terminal
+* Cabin Class
+* Flight Number
+* Gate
+
+The Booking model never changes.
+
+Only metadata changes.
+
+---
+
+# 7. JSON Principles
+
+Each JSON file should
+
+* Represent one entity
+* Use consistent keys
+* Avoid nesting unrelated data
+* Be easy to replace with REST responses
+
+---
+
+# 8. Repository Layer
+
+Every entity has its own repository.
+
+Examples
+
+* UserRepository
+* SearchRepository
+* BookingRepository
+* TicketRepository
+* OfferRepository
+
+Repositories expose protocols.
+
+Example
+
+SearchRepository
+
+* searchTrips()
+* recentSearches()
+* popularRoutes()
+
+Implementation decides whether data comes from JSON or API.
+
+---
+
+# 9. Local Data Source
+
+Current implementation.
+
+```text
+SearchRepository
+
+↓
+
+LocalSearchDataSource
+
+↓
+
+bus_routes.json
+
+flight_routes.json
+```
+
+---
+
+# 10. Remote Data Source
+
+Future implementation.
+
+```text
+SearchRepository
+
+↓
+
+RemoteSearchDataSource
+
+↓
+
+REST API
+```
+
+No ViewModel changes required.
+
+---
+
+# 11. Mapper Layer
+
+Raw JSON should never reach the UI.
+
+Flow
+
+```text
+JSON
+
+↓
+
+DTO
+
+↓
+
+Mapper
+
+↓
+
+Domain Model
+
+↓
+
+ViewModel
+```
+
+Mappers isolate backend changes.
+
+---
+
+# 12. Search Contract
+
+Every plugin implements the same search contract.
+
+Input
+
+* Origin
+* Destination
+* Travel Date
+* Passenger Count
+
+Optional
+
+* Plugin-specific filters
+
+Output
+
+* List of Trip models
+
+The UI never depends on Bus or Flight models directly.
+
+---
+
+# 13. Booking Contract
+
+Booking Engine accepts
+
+* Trip
+* Travellers
+* Contact Details
+* Payment Method
+
+Returns
+
+* Booking
+
+The plugin injects additional metadata if needed.
+
+---
+
+# 14. Ticket Contract
+
+Ticket Engine accepts
+
+Booking
+
+Returns
+
+Ticket
+
+Plugins add only metadata.
+
+No plugin creates its own ticket.
+
+---
+
+# 15. Payment Contract
+
+Payment Engine accepts
+
+* Booking
+* Payment Method
+
+Returns
+
+* Payment Result
+
+Future gateways
+
+* Razorpay
+* Stripe
+* Cashfree
+
+should implement a common PaymentProvider protocol.
+
+---
+
+# 16. API Design Principles
+
+Every endpoint should follow consistent rules.
+
+Example resources
+
+* /users
+* /search
+* /bookings
+* /tickets
+* /offers
+* /payments
+
+Use REST conventions.
+
+Responses should be versioned if required.
+
+---
+
+# 17. Pagination
+
+Large collections should support
+
+* page
+* pageSize
+* total
+* hasMore
+
+Even dummy JSON repositories should expose pagination APIs to match future backend behavior.
+
+---
+
+# 18. Error Model
+
+Every data source returns a common AppError.
+
+Examples
+
+* Network Error
+* Validation Error
+* Authentication Error
+* Not Found
+* Server Error
+* Unknown Error
+
+Views should display friendly messages.
+
+---
+
+# 19. Caching Strategy
+
+Priority
+
+1. Memory Cache
+2. SwiftData
+3. JSON / API
+
+Repositories decide when to read from cache.
+
+---
+
+# 20. Storage
+
+Persist locally
+
+* User Session
+* Bookings
+* Recent Searches
+* Saved Travellers
+* Settings
+* Theme
+* Favorite Routes
+
+Use SwiftData where structured persistence is beneficial and UserDefaults only for lightweight preferences.
+
+---
+
+# 21. Offline Support
+
+The application should work without internet using local JSON.
+
+Supported offline
+
+* Search
+* Booking Simulation
+* Ticket Viewing
+* Offers
+* Profile
+
+Only payment is simulated.
+
+---
+
+# 22. Future Backend Migration
+
+Current
+
+```text
+View
+
+↓
+
+Repository
+
+↓
+
+JSON
+```
+
+Future
+
+```text
+View
+
+↓
+
+Repository
+
+↓
+
+REST API
+
+↓
+
+Cache
+```
+
+No UI changes.
+
+No ViewModel changes.
+
+---
+
+# 23. API Response Rules
+
+Every response should contain
+
+* success
+* data
+* message
+* errors (optional)
+* pagination (optional)
+
+Avoid exposing backend-specific structures to the UI.
+
+---
+
+# 24. Data Validation
+
+Validate before persistence.
+
+Examples
+
+* Phone Number
+* Email
+* Traveller Details
+* Travel Dates
+* Payment Information
+
+Validation belongs to the Validation Engine, not Views.
+
+---
+
+# 25. Future Plugin Support
+
+New plugins
+
+* Train
+* Hotel
+* Cab
+* Cruise
+
+should reuse the same
+
+Trip
+
+Booking
+
+Ticket
+
+Payment
+
+models whenever possible.
+
+Only plugin metadata should expand.
+
+---
+
+# 26. Summary
+
+TripKart's data architecture is built around stable domain models, repositories, and mappers. The UI communicates only with repositories and never with raw JSON or network responses.
+
+By keeping repositories and domain models stable, the application can evolve from local dummy data to production APIs with minimal changes, preserving the Plugin-Based Travel Engine and ensuring long-term maintainability.
+

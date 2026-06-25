@@ -1,0 +1,706 @@
+# TripKart
+
+# Volume 4 – AI Development Playbook
+
+**Version:** 1.0
+
+**Project:** TripKart
+
+**Platform:** SwiftUI
+
+**Language:** Swift 6
+
+**Architecture:** Plugin-Based Travel Engine
+
+---
+
+# 1. Purpose
+
+This document defines the development rules for every AI coding assistant working on the TripKart project.
+
+The purpose is to ensure that every generated file follows the same architecture, coding standards, naming conventions, and design principles.
+
+No AI-generated code should violate these rules.
+
+---
+
+# 2. Core Philosophy
+
+TripKart is **not** a Bus Booking App.
+
+TripKart is **not** a Flight Booking App.
+
+TripKart is a **Travel Platform**.
+
+Bus, Flight, Train, Cab, Hotel and future services are Plugins.
+
+The application is built around reusable engines.
+
+Never duplicate features for individual plugins.
+
+---
+
+# 3. Technology Stack
+
+Language
+
+Swift 6
+
+UI
+
+SwiftUI
+
+Architecture
+
+MVVM + Clean Architecture
+
+Navigation
+
+NavigationStack + Coordinator
+
+State Management
+
+Observation Framework (@Observable)
+
+Concurrency
+
+Async/Await
+
+Dependency Injection
+
+DependencyContainer
+
+Persistence
+
+SwiftData
+
+Networking (Future)
+
+URLSession
+
+Testing
+
+Swift Testing + XCTest
+
+---
+
+# 4. Architecture Rules
+
+Always follow
+
+Plugin Engine
+
+↓
+
+Business Engines
+
+↓
+
+Repositories
+
+↓
+
+Use Cases
+
+↓
+
+ViewModels
+
+↓
+
+Views
+
+Views never access repositories.
+
+Views never contain business logic.
+
+---
+
+# 5. Project Structure
+
+```text
+TripKart
+
+├── App
+├── Core
+├── Domain
+├── Data
+├── Features
+├── Plugins
+├── Shared
+├── DesignSystem
+├── UIFramework
+├── Resources
+└── Tests
+```
+
+Never create folders outside this structure.
+
+---
+
+# 6. View Rules
+
+Views should
+
+✓ Display UI
+
+✓ Bind ViewModel
+
+✓ Call actions
+
+Views should NEVER
+
+✗ Perform API calls
+
+✗ Calculate business logic
+
+✗ Access repositories
+
+✗ Store business state
+
+---
+
+# 7. ViewModel Rules
+
+ViewModels
+
+Own
+
+* State
+* User Actions
+* Loading
+* Errors
+
+Never
+
+* Build UI
+* Navigate directly
+* Store persistent data
+
+Navigation must go through the Coordinator.
+
+---
+
+# 8. Repository Rules
+
+Repositories are the only source of data.
+
+Current
+
+Dummy JSON
+
+Future
+
+REST API
+
+ViewModels must never know where data comes from.
+
+---
+
+# 9. Plugin Rules
+
+Every plugin provides only
+
+Search Configuration
+
+Result Configuration
+
+Detail Configuration
+
+Validation Rules
+
+Ticket Metadata
+
+Fare Rules
+
+Plugins NEVER
+
+Navigate
+
+Store data
+
+Handle payments
+
+Generate tickets
+
+---
+
+# 10. Shared Engines
+
+These engines already exist.
+
+SearchEngine
+
+BookingEngine
+
+PaymentEngine
+
+TicketEngine
+
+FilterEngine
+
+SortEngine
+
+ValidationEngine
+
+AnalyticsEngine
+
+CacheEngine
+
+StorageEngine
+
+NavigationEngine
+
+ThemeEngine
+
+SessionEngine
+
+AI must reuse these engines.
+
+Never duplicate them.
+
+---
+
+# 11. SwiftUI Rules
+
+Prefer
+
+ViewBuilder
+
+Custom Modifiers
+
+Environment
+
+Observable
+
+Binding
+
+Lazy Containers
+
+Composition
+
+Avoid
+
+GeometryReader unless required
+
+AnyView
+
+Business logic inside Views
+
+Massive Views
+
+Nested if statements
+
+---
+
+# 12. Component Rules
+
+Before creating a new component,
+
+AI must ask:
+
+Can an existing component be configured?
+
+If YES
+
+Reuse.
+
+If NO
+
+Create a reusable component.
+
+Never create
+
+BusButton
+
+FlightButton
+
+TrainButton
+
+Instead
+
+PrimaryButton
+
+configured differently.
+
+---
+
+# 13. Dynamic UI Rules
+
+Every screen should render from configuration.
+
+Never create
+
+BusSearchView
+
+FlightSearchView
+
+Instead
+
+SearchScreen
+
+↓
+
+SearchConfiguration
+
+↓
+
+Plugin
+
+---
+
+# 14. Form Rules
+
+Forms are generated dynamically.
+
+Supported fields
+
+Text
+
+Date
+
+Counter
+
+Picker
+
+Switch
+
+Segment
+
+Checkbox
+
+Button
+
+Adding a field should require only configuration changes.
+
+---
+
+# 15. Card Rules
+
+Cards must be reusable.
+
+Never create
+
+BusCard
+
+FlightCard
+
+HotelCard
+
+Instead
+
+TripCard
+
+configured with
+
+TripCardConfiguration
+
+---
+
+# 16. Navigation Rules
+
+Only Coordinators perform navigation.
+
+Views never call NavigationStack directly.
+
+All navigation flows through
+
+AppCoordinator
+
+↓
+
+FeatureCoordinator
+
+↓
+
+Destination
+
+---
+
+# 17. State Rules
+
+Every screen follows
+
+Idle
+
+Loading
+
+Loaded
+
+Empty
+
+Error
+
+No custom state implementations.
+
+---
+
+# 18. Naming Convention
+
+Views
+
+SearchView
+
+TicketView
+
+TripCardView
+
+PaymentView
+
+ViewModels
+
+SearchViewModel
+
+TicketViewModel
+
+Managers
+
+ThemeManager
+
+ImageManager
+
+PaymentManager
+
+Configurations
+
+SearchConfiguration
+
+TripCardConfiguration
+
+TicketConfiguration
+
+Protocols
+
+SearchRepository
+
+PaymentProvider
+
+PluginProtocol
+
+Avoid names tied to a specific travel type.
+
+---
+
+# 19. Folder Naming
+
+Every feature follows
+
+Feature
+
+Views
+
+ViewModels
+
+Models
+
+Components
+
+Configurations
+
+Coordinator
+
+No exceptions.
+
+---
+
+# 20. Error Handling
+
+Never ignore errors.
+
+Always display
+
+Retry
+
+Empty State
+
+Loading
+
+Friendly Message
+
+Use centralized AppError.
+
+---
+
+# 21. Async Rules
+
+Always use
+
+async/await
+
+Avoid callbacks.
+
+No completion handlers unless integrating legacy APIs.
+
+---
+
+# 22. Theme Rules
+
+Never use
+
+Color.blue
+
+Color.red
+
+Font.system
+
+Instead
+
+Theme.primary
+
+Theme.textPrimary
+
+Typography.title
+
+Spacing.medium
+
+---
+
+# 23. Dependency Rules
+
+Dependencies are injected.
+
+Never create
+
+Repository()
+
+Manager()
+
+inside Views or ViewModels.
+
+Everything comes from DependencyContainer.
+
+---
+
+# 24. Testing Rules
+
+Every ViewModel
+
+must have
+
+Unit Tests
+
+Every Engine
+
+must have
+
+Tests
+
+Business logic should always be testable.
+
+---
+
+# 25. Performance Rules
+
+Use
+
+LazyVStack
+
+LazyHGrid
+
+Image Caching
+
+Pagination
+
+Task cancellation
+
+Avoid
+
+Nested ScrollViews
+
+Large body computations
+
+Blocking Main Thread
+
+---
+
+# 26. AI Coding Checklist
+
+Before generating code, verify:
+
+✓ Uses existing architecture
+
+✓ Uses Design System
+
+✓ Uses shared components
+
+✓ Uses plugin configuration
+
+✓ No duplicated UI
+
+✓ No duplicated logic
+
+✓ Async/Await
+
+✓ ThemeManager
+
+✓ Dependency Injection
+
+✓ Preview included
+
+✓ Unit-testable
+
+---
+
+# 27. Implementation Order
+
+The AI should implement features in this order:
+
+1. Foundation
+2. Design System
+3. UIFramework
+4. Core Engines
+5. Plugin Engine
+6. Authentication
+7. Home
+8. Search
+9. Results
+10. Booking
+11. Payment
+12. Ticket
+13. Trips
+14. Profile
+15. Offers
+16. Settings
+17. Analytics
+18. Testing
+19. Polish
+
+Never skip foundational layers.
+
+---
+
+# 28. AI Prompt Template
+
+Before generating code for any feature, the AI should assume the following:
+
+* Respect the Plugin-Based Travel Engine architecture.
+* Use SwiftUI and Swift 6.
+* Follow MVVM + Clean Architecture.
+* Use existing DesignSystem and UIFramework components before creating new ones.
+* Never duplicate screens for Bus, Flight, or future plugins.
+* Keep Views declarative and business logic inside ViewModels and Use Cases.
+* All new code must be reusable, testable, and backend-ready.
+
+---
+
+# 29. Golden Rules
+
+1. Reuse before creating.
+2. Configure before subclassing.
+3. Compose before duplicating.
+4. Plugins provide data, not UI logic.
+5. Views render state only.
+6. ViewModels own presentation logic.
+7. Repositories own data access.
+8. Coordinators own navigation.
+9. ThemeManager owns visual styling.
+10. Every new feature must strengthen—not weaken—the architecture.
+
+---
+
+# 30. Conclusion
+
+This document serves as the engineering contract for TripKart. Any developer or AI assistant contributing to the project must follow these rules to preserve consistency, maintainability, and scalability.
+
+The goal is not simply to produce working code, but to build a travel platform that can evolve from Bus and Flight booking into a full ecosystem of travel services without architectural rewrites.
+

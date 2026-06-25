@@ -1,0 +1,892 @@
+# TripKart
+
+# Volume 3 – SwiftUI Design System & Component Library
+
+**Version:** 2.0
+
+**Platform:** SwiftUI
+
+**Language:** Swift 6
+
+**Minimum iOS:** 17+
+
+**Architecture:** Plugin-Based Travel Engine
+
+---
+
+# 1. Design Philosophy
+
+TripKart follows a **Design System First** approach.
+
+Every screen must be assembled using reusable SwiftUI components.
+
+No screen should build custom UI unless absolutely necessary.
+
+Instead of thinking:
+
+```
+Bus Screen
+
+Flight Screen
+```
+
+Think:
+
+```
+Reusable Components
+
++
+
+Configuration
+
+=
+
+Screen
+```
+
+The Design System is the foundation of the application.
+
+---
+
+# 2. SwiftUI Principles
+
+Every UI follows these rules.
+
+### Declarative UI
+
+Views describe UI.
+
+They never control business logic.
+
+---
+
+### Composition Over Inheritance
+
+Large screens are composed from many small reusable views.
+
+Never create large 1000-line Views.
+
+---
+
+### Stateless Components
+
+Small UI components should not own state.
+
+State belongs inside ViewModels.
+
+---
+
+### Configuration Driven
+
+Views receive models.
+
+Not hardcoded values.
+
+---
+
+### Environment Driven
+
+Theme
+
+Localization
+
+Session
+
+Navigation
+
+Settings
+
+should come from Environment.
+
+---
+
+# 3. Folder Structure
+
+```
+DesignSystem
+
+├── Theme
+│
+├── Tokens
+│
+├── Components
+│
+├── Cards
+│
+├── Buttons
+│
+├── Fields
+│
+├── Navigation
+│
+├── BottomSheets
+│
+├── Modifiers
+│
+├── Styles
+│
+├── Icons
+│
+├── Animations
+│
+└── Preview
+```
+
+Everything UI lives here.
+
+---
+
+# 4. Theme System
+
+Never write
+
+```
+Color.blue
+```
+
+Instead
+
+```
+Theme.primary
+
+Theme.background
+
+Theme.error
+
+Theme.success
+```
+
+ThemeManager controls
+
+* Colors
+* Typography
+* Radius
+* Shadows
+* Icons
+* Spacing
+
+Supports
+
+* Light
+* Dark
+
+Future
+
+* Brand Themes
+
+---
+
+# 5. Design Tokens
+
+Every value comes from tokens.
+
+Spacing
+
+```
+xs
+
+sm
+
+md
+
+lg
+
+xl
+
+xxl
+```
+
+Radius
+
+```
+small
+
+medium
+
+large
+
+pill
+```
+
+Elevation
+
+```
+low
+
+medium
+
+high
+```
+
+Duration
+
+```
+fast
+
+normal
+
+slow
+```
+
+Never hardcode.
+
+---
+
+# 6. Typography
+
+Typography is centralized.
+
+```
+Display
+
+Title
+
+Headline
+
+Body
+
+Caption
+
+Price
+
+Button
+```
+
+Views never specify font sizes.
+
+Only typography tokens.
+
+---
+
+# 7. SwiftUI Components
+
+Every component is reusable.
+
+## Buttons
+
+PrimaryButton
+
+SecondaryButton
+
+OutlineButton
+
+IconButton
+
+LoadingButton
+
+FloatingButton
+
+Each supports
+
+```
+enabled
+
+disabled
+
+loading
+
+success
+```
+
+---
+
+## Text Components
+
+TitleText
+
+BodyText
+
+CaptionText
+
+PriceText
+
+BadgeText
+
+StatusText
+
+---
+
+## Cards
+
+TripCard
+
+OfferCard
+
+TicketCard
+
+CouponCard
+
+PaymentCard
+
+TravellerCard
+
+DestinationCard
+
+BookingCard
+
+Cards are configurable.
+
+Never duplicated.
+
+---
+
+## Fields
+
+SearchField
+
+DateField
+
+OTPField
+
+PhoneField
+
+EmailField
+
+PickerField
+
+PassengerField
+
+GSTField
+
+Every field follows
+
+```
+Normal
+
+Focused
+
+Error
+
+Disabled
+
+Loading
+```
+
+---
+
+## Chips
+
+FilterChip
+
+TagChip
+
+CategoryChip
+
+SelectedChip
+
+OfferChip
+
+---
+
+## Badges
+
+DiscountBadge
+
+SeatBadge
+
+PopularBadge
+
+NewBadge
+
+TrendingBadge
+
+---
+
+## Feedback
+
+Toast
+
+Loader
+
+EmptyState
+
+ErrorState
+
+SuccessBanner
+
+SkeletonView
+
+ProgressBar
+
+---
+
+## Navigation Components
+
+NavigationHeader
+
+BackButton
+
+Toolbar
+
+SearchToolbar
+
+SectionHeader
+
+---
+
+# 8. Layout System
+
+The app uses reusable layout containers.
+
+```
+PageContainer
+
+↓
+
+ScrollContainer
+
+↓
+
+Section
+
+↓
+
+Card
+
+↓
+
+Content
+```
+
+Every screen follows this layout.
+
+---
+
+# 9. Screen Template
+
+Every screen has
+
+```
+Navigation
+
+↓
+
+Header
+
+↓
+
+Body
+
+↓
+
+Footer
+```
+
+The body consists of reusable Sections.
+
+---
+
+# 10. Dynamic Form Engine
+
+Instead of manually creating forms,
+
+TripKart renders them dynamically.
+
+```
+Form
+
+↓
+
+Section
+
+↓
+
+Field
+
+↓
+
+Component
+```
+
+Supported fields
+
+* Text
+* Date
+* Counter
+* Picker
+* Segment
+* Switch
+* Checkbox
+* Button
+
+Bus
+
+and
+
+Flight
+
+share the same Form Engine.
+
+---
+
+# 11. Dynamic Card Engine
+
+Cards are rendered from models.
+
+```
+CardConfiguration
+
+↓
+
+CardRenderer
+
+↓
+
+TripCard
+```
+
+The renderer decides
+
+Header
+
+Body
+
+Footer
+
+Actions
+
+Tags
+
+No custom card per plugin.
+
+---
+
+# 12. Home Components
+
+Home is built from widgets.
+
+```
+BannerCarousel
+
+TravelCategories
+
+Offers
+
+RecentSearches
+
+ContinueBooking
+
+PopularDestinations
+
+Recommendations
+```
+
+Every widget is reusable.
+
+Widgets can be enabled or disabled through configuration.
+
+---
+
+# 13. Search Components
+
+Search screen contains
+
+OriginField
+
+DestinationField
+
+DateField
+
+PassengerSelector
+
+PluginFields
+
+SearchButton
+
+Bus plugin injects
+
+BusType
+
+Flight plugin injects
+
+CabinClass
+
+TripType
+
+ReturnDate
+
+Same SearchView.
+
+---
+
+# 14. Result Components
+
+Result Screen uses
+
+SearchSummary
+
+FilterBar
+
+SortBar
+
+TripCard
+
+Pagination
+
+FloatingFilterButton
+
+No duplicated ResultView.
+
+---
+
+# 15. Ticket Components
+
+Ticket screen contains
+
+JourneySummary
+
+PassengerCard
+
+QRCodeView
+
+Timeline
+
+FareCard
+
+SupportCard
+
+ActionButtons
+
+Only plugin metadata changes.
+
+---
+
+# 16. Bottom Sheets
+
+All sheets use a common component.
+
+Examples
+
+City Picker
+
+Date Picker
+
+Passenger Picker
+
+Coupon Picker
+
+Payment Method
+
+Filters
+
+Sort
+
+SwiftUI's `.presentationDetents()` should be wrapped in a reusable `AppBottomSheet`.
+
+---
+
+# 17. Animations
+
+Standard animations
+
+Fade
+
+Scale
+
+Slide
+
+Matched Geometry
+
+Card Expansion
+
+Hero Transition
+
+Ticket Reveal
+
+Booking Success
+
+Loading Pulse
+
+No custom animation durations.
+
+Use Animation Tokens.
+
+---
+
+# 18. View Modifiers
+
+Instead of repeating code,
+
+create modifiers.
+
+Examples
+
+```
+.cardStyle()
+
+.primaryButton()
+
+.screenBackground()
+
+.appShadow()
+
+.sectionPadding()
+
+.loading()
+
+.errorState()
+```
+
+Views remain clean.
+
+---
+
+# 19. Custom Styles
+
+Use SwiftUI Styles.
+
+```
+ButtonStyle
+
+ToggleStyle
+
+ProgressViewStyle
+
+TextFieldStyle
+
+LabelStyle
+```
+
+Never style controls inline.
+
+---
+
+# 20. Preview Strategy
+
+Every reusable component must have previews.
+
+Example
+
+```
+TripCard
+
+Light
+
+Dark
+
+Loading
+
+Selected
+
+Error
+
+Disabled
+```
+
+This speeds up development.
+
+---
+
+# 21. Accessibility
+
+Support
+
+VoiceOver
+
+Dynamic Type
+
+High Contrast
+
+Reduce Motion
+
+Large Content Viewer
+
+Minimum touch area
+
+Every component includes accessibility labels.
+
+---
+
+# 22. Component Rules
+
+Every component
+
+✓ Stateless
+
+✓ Configurable
+
+✓ Previewable
+
+✓ Theme Aware
+
+✓ Dark Mode Compatible
+
+✓ Testable
+
+✓ Accessible
+
+---
+
+# 23. Naming Convention
+
+Views
+
+```
+TripCardView
+
+SearchFieldView
+
+TicketView
+
+PriceView
+
+CouponView
+```
+
+Configuration
+
+```
+TripCardConfiguration
+
+ButtonConfiguration
+
+FieldConfiguration
+
+TicketConfiguration
+```
+
+Never use
+
+```
+BusTripCard
+
+FlightSearchButton
+
+BusDateField
+```
+
+Business names belong inside configurations.
+
+---
+
+# 24. SwiftUI Best Practices
+
+Use
+
+* `@Observable` for view models (iOS 17+)
+* `@Environment` for app-wide services
+* `@Bindable` where appropriate
+* `NavigationStack` for navigation
+* `LazyVStack` and `LazyHGrid` for performance
+* `ViewBuilder` to compose plugin-specific sections
+* `AnyLayout` when layouts need to switch dynamically
+* Custom `EnvironmentKey`s for theme, plugin context, and feature flags
+
+Avoid
+
+* Large monolithic views
+* Business logic in Views
+* Deeply nested `if` statements
+* Inline styling
+* Excessive use of `AnyView` (prefer generics and `ViewBuilder`)
+
+---
+
+# 25. Summary
+
+The TripKart SwiftUI Design System is a **configuration-driven UI framework** built entirely around reusable components, view modifiers, styles, and design tokens.
+
+The UI layer is independent of Bus, Flight, or future travel types. Plugins provide configuration models, while shared SwiftUI components render the interface. This ensures visual consistency, minimizes duplication, and makes it possible to add new travel services with little to no change to the UI layer.
+
+This Design System acts as the foundation for every screen in TripKart and should be considered the only approved way to build user interfaces within the project.
+

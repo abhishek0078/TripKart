@@ -1,0 +1,725 @@
+# TripKart
+
+# Volume 6 – Project Blueprint & Development Roadmap
+
+**Version:** 1.0
+
+**Project:** TripKart
+
+**Platform:** SwiftUI
+
+**Language:** Swift 6
+
+**Architecture:** Plugin-Based Travel Engine
+
+---
+
+# 1. Purpose
+
+This document defines the implementation strategy for TripKart.
+
+Instead of building random screens, development follows a structured roadmap where each phase builds the foundation for the next.
+
+Every milestone should result in a working application.
+
+---
+
+# 2. Project Vision
+
+TripKart is an enterprise-scale travel platform demonstrating modern iOS architecture.
+
+The goal is not just to build Bus and Flight booking.
+
+The goal is to build a reusable travel ecosystem capable of supporting:
+
+* Bus
+* Flight
+* Train
+* Hotel
+* Cab
+* Cruise
+* Ferry
+* Holiday Packages
+
+without architectural changes.
+
+---
+
+# 3. Development Principles
+
+Every phase should:
+
+* Produce working code
+* Be independently testable
+* Avoid temporary solutions
+* Reuse existing architecture
+* Never introduce technical debt intentionally
+
+---
+
+# 4. Project Milestones
+
+```text id="5tbbfd"
+Foundation
+
+↓
+
+Design System
+
+↓
+
+Core Architecture
+
+↓
+
+Plugin Engine
+
+↓
+
+Business Features
+
+↓
+
+Advanced Features
+
+↓
+
+Optimization
+
+↓
+
+Release
+```
+
+---
+
+# 5. Phase 1 – Foundation
+
+Goal
+
+Create the application skeleton.
+
+Tasks
+
+* SwiftUI App
+* Folder Structure
+* Dependency Container
+* Theme Manager
+* Navigation Foundation
+* Environment Setup
+* Build Configuration
+* Assets
+* Fonts
+* Localization Support
+
+Deliverable
+
+Empty application with architecture ready.
+
+---
+
+# 6. Phase 2 – Design System
+
+Goal
+
+Build reusable UI.
+
+Tasks
+
+* Buttons
+* Typography
+* Colors
+* Cards
+* Text Fields
+* Chips
+* Badges
+* Bottom Sheets
+* Loaders
+* Empty States
+* Error States
+* Toasts
+
+Deliverable
+
+Reusable Design System.
+
+---
+
+# 7. Phase 3 – UI Framework
+
+Goal
+
+Create reusable business UI.
+
+Tasks
+
+* DynamicForm
+* TripCard
+* TicketView
+* SearchScreen
+* BookingSummary
+* PaymentMethodList
+* PassengerSelector
+* FilterBar
+* SortBar
+
+Deliverable
+
+Reusable UI Framework.
+
+---
+
+# 8. Phase 4 – Core Engines
+
+Goal
+
+Implement reusable business engines.
+
+Tasks
+
+Search Engine
+
+Booking Engine
+
+Ticket Engine
+
+Payment Engine
+
+Theme Engine
+
+Session Engine
+
+Storage Engine
+
+Validation Engine
+
+Analytics Engine
+
+Navigation Engine
+
+Deliverable
+
+Application business foundation.
+
+---
+
+# 9. Phase 5 – Plugin Engine
+
+Goal
+
+Enable plugin architecture.
+
+Tasks
+
+Plugin Registration
+
+Plugin Loader
+
+Plugin Context
+
+Plugin Configuration
+
+Plugin Protocol
+
+Bus Plugin
+
+Flight Plugin
+
+Deliverable
+
+Plugins can register themselves.
+
+---
+
+# 10. Phase 6 – Authentication
+
+Tasks
+
+Splash
+
+Login
+
+OTP
+
+Session
+
+Logout
+
+Deliverable
+
+Working authentication flow.
+
+---
+
+# 11. Phase 7 – Home
+
+Tasks
+
+Banner
+
+Travel Categories
+
+Offers
+
+Recent Searches
+
+Recommendations
+
+Popular Destinations
+
+Continue Booking
+
+Deliverable
+
+Interactive Home Screen.
+
+---
+
+# 12. Phase 8 – Search
+
+Tasks
+
+Search Engine
+
+City Picker
+
+Date Picker
+
+Passenger Selector
+
+Recent Searches
+
+Popular Routes
+
+Search Validation
+
+Deliverable
+
+Reusable Search Screen.
+
+---
+
+# 13. Phase 9 – Results
+
+Tasks
+
+Trip Cards
+
+Sort
+
+Filters
+
+Pagination
+
+Search Summary
+
+Deliverable
+
+Shared Result Screen.
+
+---
+
+# 14. Phase 10 – Booking
+
+Tasks
+
+Trip Detail
+
+Traveller Details
+
+Seat Selection
+
+Review Booking
+
+Fare Breakdown
+
+Coupons
+
+Deliverable
+
+Reusable Booking Flow.
+
+---
+
+# 15. Phase 11 – Payment
+
+Tasks
+
+Payment Methods
+
+Dummy Gateway
+
+Payment Manager
+
+Success
+
+Failure
+
+Deliverable
+
+Shared Payment Module.
+
+---
+
+# 16. Phase 12 – Ticket
+
+Tasks
+
+Ticket Generator
+
+QR
+
+Download
+
+Share
+
+Booking History
+
+Deliverable
+
+Common Ticket Module.
+
+---
+
+# 17. Phase 13 – Profile
+
+Tasks
+
+User Profile
+
+Saved Travellers
+
+Preferences
+
+Settings
+
+Logout
+
+Deliverable
+
+Profile completed.
+
+---
+
+# 18. Phase 14 – Offers
+
+Tasks
+
+Coupons
+
+Cashback
+
+Promotions
+
+Bank Offers
+
+Deliverable
+
+Offers section.
+
+---
+
+# 19. Phase 15 – Notifications
+
+Tasks
+
+Booking Updates
+
+Offers
+
+Price Alerts
+
+Promotions
+
+Deliverable
+
+Notification Center.
+
+---
+
+# 20. Phase 16 – Settings
+
+Tasks
+
+Theme
+
+Language
+
+Privacy
+
+About
+
+App Version
+
+Deliverable
+
+Settings Module.
+
+---
+
+# 21. Phase 17 – Offline Support
+
+Tasks
+
+SwiftData
+
+Caching
+
+Persistence
+
+Recent Searches
+
+Bookings
+
+Deliverable
+
+Offline capable app.
+
+---
+
+# 22. Phase 18 – Polish
+
+Tasks
+
+Animations
+
+Accessibility
+
+Dark Mode
+
+Performance
+
+Error Handling
+
+Loading
+
+Deliverable
+
+Production-ready experience.
+
+---
+
+# 23. Phase 19 – Testing
+
+Tasks
+
+Unit Tests
+
+ViewModel Tests
+
+Engine Tests
+
+Repository Tests
+
+Snapshot Tests (optional)
+
+Deliverable
+
+Reliable codebase.
+
+---
+
+# 24. Future Releases
+
+Version 1.0
+
+* Bus
+* Flight
+
+Version 2.0
+
+* Train
+* Hotel
+
+Version 3.0
+
+* Cab
+* Cruise
+
+Version 4.0
+
+* Live APIs
+* Real Payments
+* Push Notifications
+
+Version 5.0
+
+* AI Travel Assistant
+* Personalized Recommendations
+* Dynamic Pricing
+
+---
+
+# 25. Feature Completion Checklist
+
+Every feature must include:
+
+✓ UI
+
+✓ ViewModel
+
+✓ UseCase
+
+✓ Repository
+
+✓ Dummy Data
+
+✓ Unit Tests
+
+✓ SwiftUI Preview
+
+✓ Loading State
+
+✓ Error State
+
+✓ Empty State
+
+✓ Accessibility
+
+✓ Dark Mode
+
+---
+
+# 26. Definition of Done
+
+A feature is complete only if:
+
+* Architecture rules are followed
+* Design System components are reused
+* Plugin architecture remains intact
+* No duplicated code exists
+* Unit tests pass
+* SwiftUI previews work
+* Accessibility is verified
+* Performance is acceptable
+* Code is documented where necessary
+
+---
+
+# 27. Future Plugin Checklist
+
+When adding a new plugin:
+
+Create
+
+* Plugin
+* Configuration
+* Repository
+* Metadata
+* Dummy Data
+
+Do NOT create
+
+* New Search Screen
+* New Result Screen
+* New Payment Screen
+* New Ticket Screen
+
+Reuse existing engines.
+
+---
+
+# 28. Risks
+
+Potential risks
+
+* Component duplication
+* Plugin-specific business logic leaking into shared layers
+* Massive SwiftUI Views
+* Tight coupling
+* Ignoring architecture rules
+
+Mitigation
+
+* Follow Volume 2
+* Follow Volume 3
+* Follow Volume 4
+
+---
+
+# 29. Success Metrics
+
+Project success is measured by:
+
+* Single reusable Search Screen
+* Single Booking Engine
+* Single Ticket Engine
+* Single Payment Engine
+* Easy plugin addition
+* High code reuse
+* Clean architecture
+* Backend-ready implementation
+* Maintainable SwiftUI codebase
+
+---
+
+# 30. Long-Term Vision
+
+TripKart should evolve into a platform where adding a new travel service requires:
+
+1. Creating a new Plugin.
+2. Defining its Configuration.
+3. Providing its Repository.
+4. Supplying its Metadata.
+
+The shared application should automatically support the new service through existing Search, Booking, Payment, Ticket, and Navigation engines.
+
+---
+
+# 31. Final Deliverables
+
+By the end of development, TripKart should include:
+
+### Architecture
+
+* Plugin-Based Travel Engine
+* Clean Architecture
+* MVVM
+* Repository Pattern
+* Dependency Injection
+* Coordinator-inspired Navigation
+
+### UI
+
+* SwiftUI Design System
+* UI Framework
+* Dynamic Forms
+* Dynamic Cards
+* Theme Manager
+
+### Features
+
+* Authentication
+* Home
+* Bus Booking
+* Flight Booking
+* Search
+* Results
+* Booking
+* Payment
+* Ticket
+* Offers
+* My Trips
+* Profile
+* Settings
+
+### Technical
+
+* Local JSON
+* SwiftData
+* Async/Await
+* Unit Tests
+* SwiftUI Previews
+* Offline Support
+* Future API Compatibility
+
+---
+
+# 32. Conclusion
+
+TripKart is designed as a long-term, enterprise-grade travel platform rather than a feature-specific application. Its implementation roadmap prioritizes foundational architecture, reusable systems, and incremental delivery over rapid feature development.
+
+Following this roadmap ensures that every new capability builds upon stable foundations, allowing the application to scale from a bus and flight booking demo into a production-ready travel ecosystem with minimal architectural changes.
+
+This roadmap, together with Volumes 1–5, forms the complete blueprint for designing, implementing, testing, and evolving TripKart.
+

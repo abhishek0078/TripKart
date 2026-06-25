@@ -1,0 +1,621 @@
+# TripKart
+
+## Volume 1 – Product Requirement Document (PRD)
+
+**Version:** 1.0
+
+**Project Name:** TripKart
+
+**Platform:** iOS (UIKit)
+
+**Architecture:** Plugin-Based Travel Engine
+
+**Prepared By:** Lead iOS Architecture Specification
+
+---
+
+# 1. Product Overview
+
+## Introduction
+
+TripKart is a travel booking application designed with a **Plugin-Based Travel Engine** architecture. Unlike traditional travel apps where Bus, Flight, Train, or Hotel are developed as separate modules, TripKart treats each travel category as a plugin that integrates into a common booking platform.
+
+The objective is to build an enterprise-grade iOS application that is scalable, reusable, and easy to maintain while using only local dummy JSON data during initial development. The architecture must be backend-ready, allowing APIs to replace dummy data without affecting the UI or business logic.
+
+---
+
+# 2. Vision
+
+Create a highly scalable travel platform where adding a new booking category (Train, Hotel, Cab, Cruise, Ferry, etc.) requires minimal development effort by leveraging shared engines and configuration-driven screens.
+
+The app should demonstrate production-level iOS architecture while remaining simple enough to expand over time.
+
+---
+
+# 3. Objectives
+
+### Business Objectives
+
+* Unified travel booking experience
+* Support multiple travel providers
+* Offline demo using dummy data
+* Future-ready for backend integration
+
+### Technical Objectives
+
+* Reusable UI components
+* Plugin-based architecture
+* Zero duplicated booking logic
+* Shared payment system
+* Shared ticket system
+* Configuration-driven UI
+* Clean Architecture
+* Testable codebase
+
+---
+
+# 4. Target Users
+
+### Primary Users
+
+* Travelers booking buses or flights
+* Daily commuters
+* Business travelers
+* Students
+
+### Future Users
+
+* Hotel bookings
+* Cab bookings
+* Train bookings
+* Holiday packages
+
+---
+
+# 5. Core Features
+
+## Authentication
+
+* Login using Mobile OTP
+* Google Login (future)
+* Apple Login (future)
+* Logout
+* Session persistence
+
+---
+
+## Home
+
+* Banner Carousel
+* Travel Categories
+* Recent Searches
+* Continue Booking
+* Offers
+* Popular Destinations
+* Recommended Trips
+
+---
+
+## Search
+
+* Bus Search
+* Flight Search
+
+Both use the **same Search Engine** with different configurations.
+
+---
+
+## Booking
+
+Shared booking flow for every travel type.
+
+---
+
+## Payment
+
+Shared payment module supporting:
+
+* UPI
+* Credit Card
+* Debit Card
+* Wallet
+* Net Banking
+
+---
+
+## Ticket
+
+Common ticket screen.
+
+Only ticket information changes depending on plugin.
+
+---
+
+## My Trips
+
+* Upcoming
+* Completed
+* Cancelled
+
+---
+
+## Profile
+
+* Personal Information
+* Saved Travellers
+* Payment Methods
+* Settings
+* Logout
+
+---
+
+# 6. Product Architecture
+
+TripKart follows a Plugin-Based Travel Engine.
+
+```
+TripKart
+
+↓
+
+Plugin Engine
+
+↓
+
+Bus Plugin
+
+↓
+
+Flight Plugin
+
+↓
+
+Future Plugins
+```
+
+Each plugin provides only its own business configuration.
+
+Everything else is shared.
+
+---
+
+# 7. Main Application Flow
+
+```
+Launch
+
+↓
+
+Splash
+
+↓
+
+Authentication
+
+↓
+
+Home
+
+↓
+
+Select Travel Category
+
+↓
+
+Search
+
+↓
+
+Results
+
+↓
+
+Trip Detail
+
+↓
+
+Seat/Class
+
+↓
+
+Traveller
+
+↓
+
+Review
+
+↓
+
+Payment
+
+↓
+
+Booking Success
+
+↓
+
+Ticket
+
+↓
+
+My Trips
+```
+
+---
+
+# 8. Screen Flow
+
+## Authentication
+
+```
+Splash
+
+↓
+
+Session Check
+
+↓
+
+Login
+
+↓
+
+OTP Verification
+
+↓
+
+Home
+```
+
+---
+
+## Home
+
+```
+Banner
+
+↓
+
+Travel Categories
+
+↓
+
+Offers
+
+↓
+
+Recent Searches
+
+↓
+
+Popular Routes
+
+↓
+
+Recommended Trips
+```
+
+---
+
+## Bus Booking Flow
+
+```
+Bus
+
+↓
+
+Search
+
+↓
+
+Results
+
+↓
+
+Bus Detail
+
+↓
+
+Seat Selection
+
+↓
+
+Traveller Details
+
+↓
+
+Review
+
+↓
+
+Payment
+
+↓
+
+Success
+
+↓
+
+Ticket
+```
+
+---
+
+## Flight Booking Flow
+
+```
+Flight
+
+↓
+
+Search
+
+↓
+
+Results
+
+↓
+
+Flight Detail
+
+↓
+
+Traveller Details
+
+↓
+
+Review
+
+↓
+
+Payment
+
+↓
+
+Success
+
+↓
+
+Ticket
+```
+
+Notice that only the Seat Selection screen is different.
+
+Everything else is shared.
+
+---
+
+# 9. Shared Booking Engine
+
+Instead of creating separate booking flows for Bus and Flight, TripKart uses a common Booking Engine.
+
+The Booking Engine manages:
+
+* Traveller Information
+* Contact Details
+* Fare Calculation
+* Coupon Application
+* Payment
+* Booking Confirmation
+* Ticket Generation
+
+Plugins only provide travel-specific information.
+
+---
+
+# 10. Plugin-Based Design
+
+Each travel plugin contains:
+
+* Search Configuration
+* Result Configuration
+* Detail Configuration
+* Validation Rules
+* Fare Rules
+* Ticket Metadata
+
+The shared application handles navigation, booking, payment, and tickets.
+
+Example:
+
+Bus Plugin
+
+* Bus Type
+* Boarding Point
+* Seat Layout
+
+Flight Plugin
+
+* Cabin Class
+* Terminal
+* Baggage Rules
+
+---
+
+# 11. Dynamic UI Philosophy
+
+TripKart avoids creating duplicate screens.
+
+Instead of:
+
+* BusSearchViewController
+* FlightSearchViewController
+
+TripKart contains:
+
+```
+SearchViewController
+
+↓
+
+SearchConfiguration
+
+↓
+
+Bus Configuration
+
+OR
+
+Flight Configuration
+```
+
+The same principle applies to:
+
+* Result Screen
+* Detail Screen
+* Ticket Screen
+* Payment Screen
+
+This minimizes duplicate code and improves maintainability.
+
+---
+
+# 12. Payment Flow
+
+```
+Review Booking
+
+↓
+
+Select Payment Method
+
+↓
+
+Payment Processing
+
+↓
+
+Success
+
+↓
+
+Generate Ticket
+```
+
+Payment is handled through a common Payment Manager.
+
+Future payment gateways can be added without modifying the booking flow.
+
+---
+
+# 13. Ticket Flow
+
+```
+Booking Success
+
+↓
+
+Ticket Generator
+
+↓
+
+Ticket Screen
+
+↓
+
+Download
+
+↓
+
+Share
+
+↓
+
+My Trips
+```
+
+The Ticket Engine generates tickets for every plugin using a common ticket template.
+
+---
+
+# 14. Future Roadmap
+
+Phase 1
+
+* Bus Booking
+* Flight Booking
+* Dummy JSON
+* Offline Storage
+
+Phase 2
+
+* Train Plugin
+* Hotel Plugin
+* Cab Plugin
+* API Integration
+
+Phase 3
+
+* Real Payment Gateway
+* Push Notifications
+* Live Tracking
+* AI Travel Assistant
+
+---
+
+# 15. Success Criteria
+
+The project will be considered successful if it satisfies the following:
+
+* One reusable search screen for all travel types
+* One booking engine shared across plugins
+* One payment system
+* One ticket system
+* No duplicated business logic
+* Backend-ready architecture
+* Configuration-driven UI
+* Easy addition of future travel plugins
+* Clean and maintainable codebase
+
+---
+
+# 16. Project Scope
+
+## Included
+
+* Bus Booking
+* Flight Booking
+* Authentication
+* Home
+* Search
+* Booking
+* Payment
+* Ticket
+* Profile
+* Offers
+* My Trips
+* Offline JSON data
+
+## Not Included (Initial Version)
+
+* Live APIs
+* Real payments
+* Real authentication
+* Live seat availability
+* Push notifications
+* Multi-language
+* Admin panel
+
+---
+
+# 17. Key Architectural Principles
+
+1. Plugin-first architecture.
+2. Shared business engines over feature duplication.
+3. Configuration-driven screens.
+4. Reusable UI components.
+5. Backend-ready repositories.
+6. Single responsibility for every module.
+7. Coordinator-driven navigation.
+8. Dependency Injection for all services.
+9. Local JSON as the initial data source.
+10. Future features should require new plugins, not changes to the core application.
+
+---
+
+# 18. Conclusion
+
+TripKart is designed as an enterprise-style travel booking platform rather than a collection of independent features. The application emphasizes scalability, maintainability, and reusability through a Plugin-Based Travel Engine, allowing Bus, Flight, and future travel services to share the same booking lifecycle while remaining independently configurable.
+
+This Product Requirement Document defines the product vision, user flows, feature scope, and functional requirements. The following volumes will expand on this foundation by detailing the software architecture, design system, AI development rules, and technical implementation strategy.
+

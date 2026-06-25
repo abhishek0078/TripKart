@@ -1,0 +1,863 @@
+# TripKart
+
+# Volume 2 – Software Architecture Document (SAD)
+
+**Version:** 1.0
+
+**Project:** TripKart
+
+**Platform:** iOS (UIKit)
+
+**Architecture:** Plugin-Based Travel Engine
+
+---
+
+# 1. Architecture Overview
+
+TripKart is built using a **Plugin-Based Travel Engine**.
+
+The application is **not** divided into Bus, Flight, Train or Hotel modules.
+
+Instead, it is divided into:
+
+* Core Platform
+* Shared Components
+* Business Engines
+* Travel Plugins
+
+This allows adding new travel services without changing the core application.
+
+---
+
+# 2. Architecture Principles
+
+The application follows these principles.
+
+### Reusability
+
+Every screen should be reusable.
+
+No duplicated ViewControllers.
+
+---
+
+### Configuration Driven
+
+Screens should render based on configuration.
+
+Not business type.
+
+---
+
+### Plugin Based
+
+Bus, Flight, Train...
+
+are plugins.
+
+Not modules.
+
+---
+
+### Backend Ready
+
+Replacing Dummy JSON with REST APIs should require changing only the Repository layer.
+
+---
+
+### Single Responsibility
+
+Every class has one responsibility.
+
+---
+
+### Dependency Injection
+
+No object creates its own dependencies.
+
+Everything is injected.
+
+---
+
+### Coordinator Navigation
+
+ViewControllers never navigate.
+
+Only Coordinators.
+
+---
+
+# 3. High Level Architecture
+
+```text
+TripKart
+
+│
+
+├── App
+
+├── Core
+
+├── Shared
+
+├── Features
+
+├── Plugins
+
+└── Resources
+```
+
+---
+
+# 4. Folder Structure
+
+```text
+TripKart
+
+App
+
+Core
+
+Shared
+
+Features
+
+Plugins
+
+Resources
+
+Configurations
+
+Tests
+
+Documentation
+```
+
+---
+
+# 5. Core Layer
+
+The Core layer contains reusable business engines.
+
+```text
+Core
+
+BookingEngine
+
+SearchEngine
+
+PaymentEngine
+
+TicketEngine
+
+PluginEngine
+
+NavigationEngine
+
+CacheEngine
+
+StorageEngine
+
+SessionEngine
+
+AnalyticsEngine
+
+ThemeEngine
+
+ValidationEngine
+
+FilterEngine
+
+SortEngine
+
+NotificationEngine
+```
+
+These engines never depend on any plugin.
+
+---
+
+# 6. Shared Layer
+
+Shared contains reusable UI and utilities.
+
+```text
+Shared
+
+Components
+
+Views
+
+Cells
+
+Managers
+
+Utilities
+
+Extensions
+
+Protocols
+
+DesignSystem
+
+BottomSheets
+
+Animations
+```
+
+Everything inside Shared can be reused anywhere.
+
+---
+
+# 7. Feature Layer
+
+Features contain application modules.
+
+```text
+Authentication
+
+Home
+
+Booking
+
+Payment
+
+Ticket
+
+Trips
+
+Offers
+
+Notifications
+
+Profile
+
+Settings
+```
+
+Notice:
+
+There is NO
+
+Bus Feature
+
+Flight Feature
+
+Train Feature
+
+---
+
+# 8. Plugin Layer
+
+Plugins define business-specific behaviour.
+
+```text
+Plugins
+
+BusPlugin
+
+FlightPlugin
+
+TrainPlugin
+
+CabPlugin
+
+HotelPlugin
+```
+
+Every plugin implements the same protocol.
+
+---
+
+# 9. Plugin Contract
+
+Every plugin must provide
+
+```text
+Search Configuration
+
+Result Configuration
+
+Detail Configuration
+
+Validation Rules
+
+Fare Rules
+
+Ticket Metadata
+
+Analytics Events
+```
+
+Plugins never own navigation.
+
+Plugins never own payment.
+
+Plugins never own booking.
+
+---
+
+# 10. Application Flow
+
+```text
+Launch
+
+↓
+
+Splash
+
+↓
+
+Authentication
+
+↓
+
+Home
+
+↓
+
+Plugin
+
+↓
+
+Search
+
+↓
+
+Results
+
+↓
+
+Detail
+
+↓
+
+Traveller
+
+↓
+
+Review
+
+↓
+
+Payment
+
+↓
+
+Success
+
+↓
+
+Ticket
+```
+
+Booking flow is shared.
+
+---
+
+# 11. Shared Engines
+
+## Search Engine
+
+Responsible for
+
+* Searching
+* Validation
+* Recent Searches
+* Search History
+
+---
+
+## Booking Engine
+
+Responsible for
+
+* Traveller Details
+* Fare Calculation
+* Coupons
+* Review
+* Booking
+
+---
+
+## Ticket Engine
+
+Responsible for
+
+* Ticket Generation
+* QR
+* PDF
+* Sharing
+
+---
+
+## Payment Engine
+
+Responsible for
+
+* Payment Methods
+* Gateway Integration
+* Success
+* Failure
+
+---
+
+## Filter Engine
+
+Responsible for
+
+* Price
+* Rating
+* Duration
+* Stops
+* Operator
+
+---
+
+## Sort Engine
+
+Responsible for
+
+* Price
+* Duration
+* Popularity
+* Departure
+* Arrival
+
+---
+
+## Validation Engine
+
+Shared validation.
+
+Example
+
+* Email
+* Mobile
+* Traveller
+* Date
+
+---
+
+## Session Engine
+
+Responsible for
+
+* Login State
+* User Session
+* Logout
+
+---
+
+## Theme Engine
+
+Responsible for
+
+* Colors
+* Typography
+* Icons
+* Spacing
+
+---
+
+## Analytics Engine
+
+Responsible for
+
+Tracking
+
+* Search
+* Booking
+* Payment
+* Login
+* Offers
+
+No screen directly calls Firebase.
+
+---
+
+# 12. Dynamic Screen Architecture
+
+The application never creates
+
+BusSearchViewController
+
+FlightSearchViewController
+
+Instead
+
+```text
+SearchViewController
+
+↓
+
+SearchConfiguration
+
+↓
+
+Bus Configuration
+
+or
+
+Flight Configuration
+```
+
+Same applies to
+
+* Result Screen
+* Detail Screen
+* Payment Screen
+* Ticket Screen
+
+---
+
+# 13. Screen Hierarchy
+
+```text
+Splash
+
+↓
+
+Authentication
+
+↓
+
+Tab Bar
+
+↓
+
+Home
+
+Trips
+
+Offers
+
+Profile
+```
+
+Booking starts from Home.
+
+---
+
+# 14. Search Architecture
+
+```text
+Search Screen
+
+↓
+
+Search ViewModel
+
+↓
+
+Search UseCase
+
+↓
+
+Repository
+
+↓
+
+Dummy JSON
+```
+
+Later
+
+```text
+Repository
+
+↓
+
+REST API
+```
+
+No ViewModel changes.
+
+---
+
+# 15. Repository Pattern
+
+Repositories hide data source implementation.
+
+Current
+
+```text
+JSON
+
+↓
+
+Repository
+
+↓
+
+ViewModel
+```
+
+Future
+
+```text
+REST API
+
+↓
+
+Repository
+
+↓
+
+ViewModel
+```
+
+The UI never knows where data comes from.
+
+---
+
+# 16. Coordinator Architecture
+
+Navigation is handled only by Coordinators.
+
+```text
+AppCoordinator
+
+↓
+
+AuthCoordinator
+
+↓
+
+HomeCoordinator
+
+↓
+
+BookingCoordinator
+
+↓
+
+ProfileCoordinator
+```
+
+UIViewControllers never push another ViewController.
+
+---
+
+# 17. Dependency Injection
+
+Dependencies are created only once.
+
+```text
+DependencyContainer
+
+↓
+
+Repository
+
+↓
+
+UseCase
+
+↓
+
+ViewModel
+
+↓
+
+ViewController
+```
+
+Never instantiate dependencies inside screens.
+
+---
+
+# 18. State Management
+
+Every ViewModel follows
+
+```text
+Idle
+
+Loading
+
+Loaded
+
+Empty
+
+Error
+```
+
+Every screen behaves consistently.
+
+---
+
+# 19. Storage
+
+Current
+
+* Local JSON
+* UserDefaults
+* SwiftData
+
+Future
+
+* API
+* Cache
+* Database
+
+No UI changes required.
+
+---
+
+# 20. Reusable Components
+
+Shared UI Library
+
+* Primary Button
+* Secondary Button
+* Search Field
+* Date Picker
+* Passenger Selector
+* Card View
+* Trip Card
+* Offer Card
+* Ticket Card
+* Price View
+* Bottom Sheet
+* Toast
+* Loader
+* Empty View
+* Error View
+
+Every screen uses these components.
+
+---
+
+# 21. Design Rules
+
+Never duplicate UI.
+
+Never duplicate business logic.
+
+Always create reusable components.
+
+Always configure screens instead of creating new ones.
+
+---
+
+# 22. Future Plugin Example
+
+Adding Train Booking requires
+
+```text
+Train Plugin
+
+↓
+
+Search Configuration
+
+↓
+
+Result Configuration
+
+↓
+
+Detail Configuration
+
+↓
+
+Fare Rules
+
+↓
+
+Ticket Metadata
+```
+
+No Booking Engine changes.
+
+No Payment changes.
+
+No Ticket changes.
+
+No Home changes.
+
+---
+
+# 23. Coding Standards
+
+Follow
+
+* SOLID
+* DRY
+* Clean Architecture
+* MVVM
+* Coordinator
+* Repository
+* Dependency Injection
+
+---
+
+# 24. Architecture Rules
+
+Every developer and AI assistant must follow these rules.
+
+### Allowed
+
+✓ Shared Components
+
+✓ Shared Engines
+
+✓ Configuration Driven UI
+
+✓ Plugins
+
+✓ Repository Pattern
+
+✓ Coordinators
+
+✓ Dependency Injection
+
+---
+
+### Forbidden
+
+✗ Duplicate Search Screens
+
+✗ Duplicate Result Screens
+
+✗ Business Logic inside ViewControllers
+
+✗ Direct Navigation from UIViewController
+
+✗ Hardcoded Colors
+
+✗ Direct UserDefaults Access
+
+✗ Singleton Abuse
+
+✗ Business Logic inside Cells
+
+---
+
+# 25. Future Scalability
+
+The architecture supports
+
+* Bus
+* Flight
+* Train
+* Cab
+* Hotel
+* Cruise
+* Ferry
+* Visa
+* Holiday Packages
+
+without changing the Core Platform.
+
+---
+
+# 26. Summary
+
+TripKart is built as a reusable travel platform rather than a collection of individual booking modules.
+
+The Core Platform owns navigation, booking, payment, tickets, analytics, storage, and business engines.
+
+Travel plugins contribute only their unique business configurations, allowing new travel categories to be introduced with minimal effort while keeping the application clean, maintainable, and backend-ready.
+
