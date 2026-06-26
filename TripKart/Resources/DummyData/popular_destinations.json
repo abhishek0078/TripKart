@@ -1,0 +1,46 @@
+{
+  "destinations": [
+    {
+      "id": "dest_001",
+      "name": "Goa",
+      "state": "Goa",
+      "systemIcon": "sun.max.fill",
+      "category": "Beaches"
+    },
+    {
+      "id": "dest_002",
+      "name": "Manali",
+      "state": "Himachal Pradesh",
+      "systemIcon": "mountain.2.fill",
+      "category": "Hills"
+    },
+    {
+      "id": "dest_003",
+      "name": "Mumbai",
+      "state": "Maharashtra",
+      "systemIcon": "building.2.fill",
+      "category": "City"
+    },
+    {
+      "id": "dest_004",
+      "name": "Jaipur",
+      "state": "Rajasthan",
+      "systemIcon": "crown.fill",
+      "category": "Heritage"
+    },
+    {
+      "id": "dest_005",
+      "name": "Ooty",
+      "state": "Tamil Nadu",
+      "systemIcon": "leaf.fill",
+      "category": "Nature"
+    },
+    {
+      "id": "dest_006",
+      "name": "Kerala",
+      "state": "Kerala",
+      "systemIcon": "water.waves",
+      "category": "Backwaters"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "banners": [
+    {
+      "id": "banner_001",
+      "title": "Summer Sale",
+      "subtitle": "Up to 30% off on Bus tickets",
+      "systemIcon": "bus.fill",
+      "colorHex": "#2E80F7",
+      "actionLabel": "Book Now"
+    },
+    {
+      "id": "banner_002",
+      "title": "Fly Smart",
+      "subtitle": "Flat ₹500 off on Flights above ₹3000",
+      "systemIcon": "airplane",
+      "colorHex": "#7C3AED",
+      "actionLabel": "Explore"
+    },
+    {
+      "id": "banner_003",
+      "title": "Weekend Getaway",
+      "subtitle": "Discover popular routes near you",
+      "systemIcon": "map.fill",
+      "colorHex": "#059669",
+      "actionLabel": "Discover"
+    }
+  ]
+}

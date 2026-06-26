@@ -1,0 +1,46 @@
+{
+  "categories": [
+    {
+      "id": "cat_bus",
+      "name": "Bus",
+      "systemIcon": "bus.fill",
+      "pluginType": "bus",
+      "isAvailable": true
+    },
+    {
+      "id": "cat_flight",
+      "name": "Flight",
+      "systemIcon": "airplane",
+      "pluginType": "flight",
+      "isAvailable": true
+    },
+    {
+      "id": "cat_train",
+      "name": "Train",
+      "systemIcon": "tram.fill",
+      "pluginType": "train",
+      "isAvailable": false
+    },
+    {
+      "id": "cat_hotel",
+      "name": "Hotel",
+      "systemIcon": "building.2.fill",
+      "pluginType": "hotel",
+      "isAvailable": false
+    },
+    {
+      "id": "cat_cab",
+      "name": "Cab",
+      "systemIcon": "car.fill",
+      "pluginType": "cab",
+      "isAvailable": false
+    },
+    {
+      "id": "cat_cruise",
+      "name": "Cruise",
+      "systemIcon": "ferry.fill",
+      "pluginType": "cruise",
+      "isAvailable": false
+    }
+  ]
+}

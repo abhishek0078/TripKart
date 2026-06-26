@@ -1,0 +1,7 @@
+{
+  "travellers": [
+    { "id": "tvl_001", "firstName": "Rahul",   "lastName": "Sharma",  "age": 28, "gender": "Male",   "documentType": "Aadhaar", "documentNumber": "XXXX-XXXX-1234" },
+    { "id": "tvl_002", "firstName": "Priya",   "lastName": "Verma",   "age": 25, "gender": "Female", "documentType": "Aadhaar", "documentNumber": "XXXX-XXXX-5678" },
+    { "id": "tvl_003", "firstName": "Arjun",   "lastName": "Sharma",  "age": 6,  "gender": "Male",   "documentType": "Birth Certificate", "documentNumber": "BC-2018-0042" }
+  ]
+}

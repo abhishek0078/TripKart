@@ -1,0 +1,40 @@
+{
+  "offers": [
+    {
+      "id": "offer_001",
+      "title": "TRIPKART30",
+      "description": "30% off on your first bus booking",
+      "code": "TRIPKART30",
+      "discount": "30% OFF",
+      "validUntil": "31 Jul 2026",
+      "colorHex": "#2E80F7"
+    },
+    {
+      "id": "offer_002",
+      "title": "FLYLOW500",
+      "description": "Flat ₹500 off on flights above ₹3000",
+      "code": "FLYLOW500",
+      "discount": "₹500 OFF",
+      "validUntil": "15 Jul 2026",
+      "colorHex": "#7C3AED"
+    },
+    {
+      "id": "offer_003",
+      "title": "FIRSTBUS",
+      "description": "Free seat upgrade on your first bus ride",
+      "code": "FIRSTBUS",
+      "discount": "FREE\nUPGRADE",
+      "validUntil": "31 Aug 2026",
+      "colorHex": "#059669"
+    },
+    {
+      "id": "offer_004",
+      "title": "WEEKEND20",
+      "description": "20% off on all weekend bookings",
+      "code": "WEEKEND20",
+      "discount": "20% OFF",
+      "validUntil": "30 Sep 2026",
+      "colorHex": "#D97706"
+    }
+  ]
+}

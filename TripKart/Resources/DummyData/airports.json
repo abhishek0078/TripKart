@@ -1,0 +1,16 @@
+{
+  "locations": [
+    { "id": "air_del", "name": "Indira Gandhi Intl",   "subtitle": "New Delhi",   "code": "DEL", "type": "airport" },
+    { "id": "air_bom", "name": "Chhatrapati Shivaji",  "subtitle": "Mumbai",      "code": "BOM", "type": "airport" },
+    { "id": "air_blr", "name": "Kempegowda Intl",      "subtitle": "Bangalore",   "code": "BLR", "type": "airport" },
+    { "id": "air_maa", "name": "Chennai Intl",          "subtitle": "Chennai",     "code": "MAA", "type": "airport" },
+    { "id": "air_hyd", "name": "Rajiv Gandhi Intl",    "subtitle": "Hyderabad",   "code": "HYD", "type": "airport" },
+    { "id": "air_ccu", "name": "Netaji Subhash Chandra","subtitle": "Kolkata",    "code": "CCU", "type": "airport" },
+    { "id": "air_goi", "name": "Goa Intl Airport",     "subtitle": "Goa",         "code": "GOI", "type": "airport" },
+    { "id": "air_jai", "name": "Jaipur Intl Airport",  "subtitle": "Jaipur",      "code": "JAI", "type": "airport" },
+    { "id": "air_amd", "name": "Sardar Vallabhbhai",   "subtitle": "Ahmedabad",   "code": "AMD", "type": "airport" },
+    { "id": "air_cok", "name": "Cochin Intl Airport",  "subtitle": "Kochi",       "code": "COK", "type": "airport" },
+    { "id": "air_lko", "name": "Chaudhary Charan Singh","subtitle": "Lucknow",    "code": "LKO", "type": "airport" },
+    { "id": "air_pnq", "name": "Pune Airport",         "subtitle": "Pune",        "code": "PNQ", "type": "airport" }
+  ]
+}

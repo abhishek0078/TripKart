@@ -1,0 +1,9 @@
+{
+  "coupons": [
+    { "id": "cpn_001", "code": "FIRST50",  "title": "First Booking Offer",  "description": "50% off up to ₹200 on your first booking", "discountType": "percent", "discountValue": 50, "maxDiscount": 200, "minAmount": 500  },
+    { "id": "cpn_002", "code": "SAVE100",  "title": "Flat ₹100 Off",        "description": "Flat ₹100 off on bookings above ₹400",    "discountType": "flat",    "discountValue": 100,"maxDiscount": 100, "minAmount": 400  },
+    { "id": "cpn_003", "code": "TRIPKART", "title": "TripKart Special",     "description": "20% off up to ₹300 on any booking",       "discountType": "percent", "discountValue": 20, "maxDiscount": 300, "minAmount": 300  },
+    { "id": "cpn_004", "code": "FLY200",   "title": "Flight Saver",         "description": "Flat ₹200 off on flight bookings",         "discountType": "flat",    "discountValue": 200,"maxDiscount": 200, "minAmount": 3000 },
+    { "id": "cpn_005", "code": "BUS75",    "title": "Bus Bonanza",          "description": "Flat ₹75 off on bus bookings",             "discountType": "flat",    "discountValue": 75, "maxDiscount": 75,  "minAmount": 400  }
+  ]
+}

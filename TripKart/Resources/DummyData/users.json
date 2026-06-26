@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "id": "user_001",
+      "name": "Rahul Sharma",
+      "phone": "9876543210",
+      "email": "rahul@example.com",
+      "avatar": null
+    },
+    {
+      "id": "user_002",
+      "name": "Priya Singh",
+      "phone": "9988776655",
+      "email": "priya@example.com",
+      "avatar": null
+    },
+    {
+      "id": "user_003",
+      "name": "Amit Kumar",
+      "phone": "8877665544",
+      "email": "amit@example.com",
+      "avatar": null
+    }
+  ]
+}

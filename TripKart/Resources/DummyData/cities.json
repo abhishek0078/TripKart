@@ -1,0 +1,24 @@
+{
+  "locations": [
+    { "id": "city_del", "name": "New Delhi",  "subtitle": "Delhi",             "code": "DEL", "type": "city" },
+    { "id": "city_mum", "name": "Mumbai",      "subtitle": "Maharashtra",       "code": "MUM", "type": "city" },
+    { "id": "city_blr", "name": "Bangalore",   "subtitle": "Karnataka",         "code": "BLR", "type": "city" },
+    { "id": "city_chn", "name": "Chennai",     "subtitle": "Tamil Nadu",        "code": "CHN", "type": "city" },
+    { "id": "city_hyd", "name": "Hyderabad",   "subtitle": "Telangana",         "code": "HYD", "type": "city" },
+    { "id": "city_pun", "name": "Pune",        "subtitle": "Maharashtra",       "code": "PNQ", "type": "city" },
+    { "id": "city_ahm", "name": "Ahmedabad",   "subtitle": "Gujarat",           "code": "AMD", "type": "city" },
+    { "id": "city_jai", "name": "Jaipur",      "subtitle": "Rajasthan",         "code": "JAI", "type": "city" },
+    { "id": "city_luc", "name": "Lucknow",     "subtitle": "Uttar Pradesh",     "code": "LKO", "type": "city" },
+    { "id": "city_kol", "name": "Kolkata",     "subtitle": "West Bengal",       "code": "CCU", "type": "city" },
+    { "id": "city_chd", "name": "Chandigarh",  "subtitle": "Punjab",            "code": "IXC", "type": "city" },
+    { "id": "city_nag", "name": "Nagpur",      "subtitle": "Maharashtra",       "code": "NAG", "type": "city" },
+    { "id": "city_ind", "name": "Indore",      "subtitle": "Madhya Pradesh",    "code": "IDR", "type": "city" },
+    { "id": "city_coi", "name": "Coimbatore",  "subtitle": "Tamil Nadu",        "code": "CJB", "type": "city" },
+    { "id": "city_koc", "name": "Kochi",       "subtitle": "Kerala",            "code": "COK", "type": "city" },
+    { "id": "city_mys", "name": "Mysuru",      "subtitle": "Karnataka",         "code": "MYQ", "type": "city" },
+    { "id": "city_sur", "name": "Surat",       "subtitle": "Gujarat",           "code": "STV", "type": "city" },
+    { "id": "city_goa", "name": "Panaji",      "subtitle": "Goa",               "code": "GOI", "type": "city" },
+    { "id": "city_vns", "name": "Varanasi",    "subtitle": "Uttar Pradesh",     "code": "VNS", "type": "city" },
+    { "id": "city_agr", "name": "Agra",        "subtitle": "Uttar Pradesh",     "code": "AGR", "type": "city" }
+  ]
+}
