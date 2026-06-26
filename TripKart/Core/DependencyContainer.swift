@@ -14,4 +14,5 @@ final class DependencyContainer {
     let resultsRepository:    any ResultsRepository    = LocalResultsRepository()
     let couponRepository:     any CouponRepository     = LocalCouponRepository()
     let bookingRepository:    any BookingRepository    = LocalBookingRepository()
+    let paymentRepository:    any PaymentRepository    = LocalPaymentRepository()
 }

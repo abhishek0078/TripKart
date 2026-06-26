@@ -10,7 +10,7 @@ struct MainTabView: View {
         TabView {
             // Home Tab
             NavigationStack(path: $homeCoordinator.path) {
-                HomeRootView(homeRepository: container.homeRepository)
+                HomeRootView(homeRepository: container.homeRepository, bookingRepository: container.bookingRepository)
                     .navigationDestination(for: HomeDestination.self) { destination in
                         switch destination {
                         case .search(let category):
@@ -37,7 +37,7 @@ struct MainTabView: View {
 
             // Trips Tab
             NavigationStack {
-                TripsView()
+                TripsView(bookingRepository: container.bookingRepository)
             }
             .tabItem { Label("Trips", systemImage: "ticket.fill") }
 

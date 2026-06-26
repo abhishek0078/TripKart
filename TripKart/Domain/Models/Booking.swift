@@ -17,6 +17,11 @@ struct Booking: Identifiable, Codable, Hashable, Sendable {
     let couponCode: String?
     let status: BookingStatus
     let createdAt: Date
+    let travelDate: Date
+    let returnDate: Date?
+    let origin: SearchLocation
+    let destination: SearchLocation
 
     var isRoundTrip: Bool { returnResult != nil }
+    var isUpcoming: Bool  { travelDate >= Calendar.current.startOfDay(for: Date()) }
 }

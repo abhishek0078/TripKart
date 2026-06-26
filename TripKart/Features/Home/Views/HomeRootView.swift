@@ -2,18 +2,26 @@ import SwiftUI
 
 struct HomeRootView: View {
 
-    @Environment(SessionEngine.self) private var sessionEngine
-    @Environment(HomeCoordinator.self) private var coordinator
+    @Environment(SessionEngine.self)    private var sessionEngine
+    @Environment(HomeCoordinator.self)  private var coordinator
     @State private var viewModel: HomeViewModel
+    @State private var selectedBooking: Booking?
 
-    init(homeRepository: any HomeRepository) {
-        _viewModel = State(initialValue: HomeViewModel(homeRepository: homeRepository))
+    init(homeRepository: any HomeRepository, bookingRepository: any BookingRepository) {
+        _viewModel = State(initialValue: HomeViewModel(
+            homeRepository: homeRepository,
+            bookingRepository: bookingRepository
+        ))
     }
 
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: Spacing.xl) {
                 greetingSection
+
+                if !viewModel.upcomingBookings.isEmpty {
+                    upcomingTripsSection
+                }
 
                 if !viewModel.banners.isEmpty {
                     BannerCarouselView(banners: viewModel.banners)
@@ -49,6 +57,7 @@ struct HomeRootView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .task { await viewModel.loadHome() }
+        .onAppear { Task { await viewModel.loadHome() } }
         .overlay {
             if viewModel.state == .loading && viewModel.banners.isEmpty {
                 ProgressView()
@@ -57,6 +66,16 @@ struct HomeRootView: View {
             }
         }
         .refreshable { await viewModel.loadHome() }
+        .sheet(item: $selectedBooking) { booking in
+            NavigationStack {
+                BookingDetailView(booking: booking)
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("Close") { selectedBooking = nil }
+                        }
+                    }
+            }
+        }
     }
 
     // MARK: - Sections
@@ -74,6 +93,23 @@ struct HomeRootView: View {
         }
         .padding(.horizontal, Spacing.lg)
         .padding(.top, Spacing.sm)
+    }
+
+    private var upcomingTripsSection: some View {
+        VStack(alignment: .leading, spacing: Spacing.md) {
+            SectionHeaderView(title: "Upcoming Trips", showSeeAll: false)
+                .padding(.horizontal, Spacing.lg)
+
+            VStack(spacing: Spacing.sm) {
+                ForEach(viewModel.upcomingBookings) { booking in
+                    Button { selectedBooking = booking } label: {
+                        UpcomingTripCardView(booking: booking)
+                            .padding(.horizontal, Spacing.lg)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+        }
     }
 
     private var categorySection: some View {

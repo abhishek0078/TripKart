@@ -48,7 +48,11 @@ final class BookingEngine {
             fareBreakdown: fareBreakdown,
             couponCode: appliedCoupon?.code,
             status: .confirmed,
-            createdAt: Date()
+            createdAt: Date(),
+            travelDate: query.travelDate,
+            returnDate: query.returnDate,
+            origin: query.origin,
+            destination: query.destination
         )
     }
 }

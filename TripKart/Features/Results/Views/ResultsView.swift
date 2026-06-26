@@ -67,7 +67,9 @@ struct ResultsView: View {
                     plugin: plugin,
                     query: viewModel.query,
                     couponRepository: container.couponRepository,
-                    resultsRepository: container.resultsRepository
+                    resultsRepository: container.resultsRepository,
+                    bookingRepository: container.bookingRepository,
+                    paymentRepository: container.paymentRepository
                 )
             }
         }
