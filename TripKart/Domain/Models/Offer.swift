@@ -8,4 +8,5 @@ struct Offer: Identifiable, Codable, Hashable, Sendable {
     let discount: String
     let validUntil: String
     let colorHex: String
+    let travelType: String  // "bus" | "flight" | "any"
 }

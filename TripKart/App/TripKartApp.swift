@@ -11,6 +11,7 @@ struct TripKartApp: App {
                 .environment(container.sessionEngine)
                 .environment(container.themeManager)
                 .environment(container)
+                .preferredColorScheme(container.themeManager.colorSchemePreference.colorScheme)
         }
     }
 }

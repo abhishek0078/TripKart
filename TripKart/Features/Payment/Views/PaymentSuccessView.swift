@@ -1,7 +1,8 @@
 import SwiftUI
 
 struct PaymentSuccessView: View {
-    @Environment(BookingCoordinator.self) private var coordinator
+    @Environment(BookingCoordinator.self)  private var coordinator
+    @Environment(DependencyContainer.self) private var container
 
     let booking: Booking
 
@@ -69,7 +70,16 @@ struct PaymentSuccessView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
         .toolbar(.hidden, for: .tabBar)
-        .onAppear { animate = true }
+        .onAppear {
+            animate = true
+            Task {
+                await container.notificationEngine.checkPermission()
+                if !container.notificationEngine.permissionGranted {
+                    await container.notificationEngine.requestPermission()
+                }
+                await container.notificationEngine.handleBookingConfirmed(booking)
+            }
+        }
         .safeAreaInset(edge: .bottom) { bottomButtons }
         .sheet(isPresented: $showTicketSheet) {
             NavigationStack {

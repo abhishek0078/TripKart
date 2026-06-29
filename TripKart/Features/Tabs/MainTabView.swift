@@ -5,9 +5,10 @@ struct MainTabView: View {
     @Environment(DependencyContainer.self) private var container
     @Environment(SessionEngine.self) private var sessionEngine
     @State private var homeCoordinator = HomeCoordinator()
+    @State private var selectedTab = 0
 
     var body: some View {
-        TabView {
+        TabView(selection: $selectedTab) {
             // Home Tab
             NavigationStack(path: $homeCoordinator.path) {
                 HomeRootView(homeRepository: container.homeRepository, bookingRepository: container.bookingRepository)
@@ -24,6 +25,9 @@ struct MainTabView: View {
                         case .offerDetail(let offer):
                             OfferDetailPlaceholder(offer: offer)
                                 .toolbar(.hidden, for: .tabBar)
+                        case .notifications:
+                            NotificationsView()
+                                .toolbar(.hidden, for: .tabBar)
                         case .results(let query):
                             if let plugin = container.pluginEngine.plugin(for: query.pluginType) {
                                 ResultsView(query: query, plugin: plugin, resultsRepository: container.resultsRepository)
@@ -34,18 +38,27 @@ struct MainTabView: View {
             }
             .environment(homeCoordinator)
             .tabItem { Label("Home", systemImage: "house.fill") }
+            .tag(0)
 
             // Trips Tab
             NavigationStack {
                 TripsView(bookingRepository: container.bookingRepository)
             }
             .tabItem { Label("Trips", systemImage: "ticket.fill") }
+            .tag(1)
 
             // Offers Tab
             NavigationStack {
-                OffersView()
+                OffersView(
+                    homeRepository: container.homeRepository,
+                    onStartBooking: { travelType in
+                        homeCoordinator.pendingSearchPluginType = travelType
+                        selectedTab = 0
+                    }
+                )
             }
             .tabItem { Label("Offers", systemImage: "tag.fill") }
+            .tag(2)
 
             // Profile Tab
             NavigationStack {
@@ -53,12 +66,13 @@ struct MainTabView: View {
             }
             .environment(sessionEngine)
             .tabItem { Label("Profile", systemImage: "person.fill") }
+            .tag(3)
         }
         .tint(Color.App.primary)
     }
 }
 
-// MARK: - Placeholder screens (replaced in later phases)
+// MARK: - Placeholder screens
 
 private struct ComingSoonView: View {
     let title: String

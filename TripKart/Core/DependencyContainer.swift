@@ -15,4 +15,6 @@ final class DependencyContainer {
     let couponRepository:     any CouponRepository     = LocalCouponRepository()
     let bookingRepository:    any BookingRepository    = LocalBookingRepository()
     let paymentRepository:    any PaymentRepository    = LocalPaymentRepository()
+    let travellerRepository:  any TravellerRepository  = LocalTravellerRepository()
+    let notificationEngine:   NotificationEngine        = NotificationEngine()
 }

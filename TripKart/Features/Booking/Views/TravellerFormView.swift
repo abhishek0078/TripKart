@@ -39,14 +39,25 @@ private struct TravellerDraft {
             documentNumber: documentNumber.trimmingCharacters(in: .whitespaces)
         )
     }
+
+    mutating func fill(from traveller: Traveller) {
+        firstName = traveller.firstName
+        lastName = traveller.lastName
+        age = String(traveller.age)
+        gender = traveller.gender
+        documentNumber = traveller.documentNumber
+    }
 }
 
 struct TravellerFormView: View {
     @Environment(BookingCoordinator.self) private var coordinator
     @Environment(BookingEngine.self) private var bookingEngine
+    @Environment(DependencyContainer.self) private var container
 
     @State private var drafts: [TravellerDraft] = []
     @State private var didAttemptSubmit = false
+    @State private var pickerIndexShown: Int? = nil
+    @State private var savedTravellers: [Traveller] = []
 
     var body: some View {
         ScrollView {
@@ -61,7 +72,21 @@ struct TravellerFormView: View {
         .navigationTitle("Traveller Details")
         .navigationBarTitleDisplayMode(.large)
         .onAppear { setupDrafts() }
+        .task { savedTravellers = (try? await container.travellerRepository.fetchAll()) ?? [] }
         .safeAreaInset(edge: .bottom) { continueButton }
+        .sheet(item: Binding(
+            get: { pickerIndexShown.map { SavedPickerTarget(index: $0) } },
+            set: { pickerIndexShown = $0?.index }
+        )) { target in
+            SavedTravellerPickerSheet(
+                travellers: savedTravellers,
+                onSelect: { traveller in
+                    drafts[target.index].fill(from: traveller)
+                    pickerIndexShown = nil
+                },
+                onDismiss: { pickerIndexShown = nil }
+            )
+        }
     }
 
     private func travellerSection(index: Int) -> some View {
@@ -74,6 +99,20 @@ struct TravellerFormView: View {
                 Text("of \(drafts.count)")
                     .font(Font.App.caption)
                     .foregroundStyle(Color.App.textTertiary)
+
+                if !savedTravellers.isEmpty {
+                    Button {
+                        pickerIndexShown = index
+                    } label: {
+                        Label("Saved", systemImage: "person.crop.circle.badge.checkmark")
+                            .font(Font.App.small)
+                            .foregroundStyle(Color.App.primary)
+                            .padding(.horizontal, Spacing.sm)
+                            .padding(.vertical, 5)
+                            .background(Color.App.primary.opacity(0.1))
+                            .clipShape(Capsule())
+                    }
+                }
             }
 
             FloatingLabelTextField(
@@ -162,5 +201,62 @@ struct TravellerFormView: View {
     private func setupDrafts() {
         guard drafts.isEmpty else { return }
         drafts = (0..<bookingEngine.query.passengers).map { _ in TravellerDraft() }
+    }
+}
+
+// MARK: – Helpers
+
+private struct SavedPickerTarget: Identifiable {
+    let index: Int
+    var id: Int { index }
+}
+
+private struct SavedTravellerPickerSheet: View {
+    let travellers: [Traveller]
+    let onSelect: (Traveller) -> Void
+    let onDismiss: () -> Void
+
+    var body: some View {
+        NavigationStack {
+            List(travellers) { traveller in
+                Button {
+                    onSelect(traveller)
+                } label: {
+                    HStack(spacing: Spacing.md) {
+                        ZStack {
+                            Circle()
+                                .fill(Color.App.primary.opacity(0.1))
+                                .frame(width: 44, height: 44)
+                            Text(traveller.firstName.prefix(1).uppercased())
+                                .font(Font.App.headline)
+                                .foregroundStyle(Color.App.primary)
+                        }
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("\(traveller.firstName) \(traveller.lastName)")
+                                .font(Font.App.body)
+                                .foregroundStyle(Color.App.textPrimary)
+                            Text("Age \(traveller.age) · \(traveller.gender.rawValue) · \(traveller.documentType)")
+                                .font(Font.App.caption)
+                                .foregroundStyle(Color.App.textSecondary)
+                        }
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 12))
+                            .foregroundStyle(Color.App.textTertiary)
+                    }
+                    .padding(.vertical, Spacing.xs)
+                }
+                .buttonStyle(.plain)
+            }
+            .listStyle(.insetGrouped)
+            .navigationTitle("Choose Traveller")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel", action: onDismiss)
+                }
+            }
+        }
+        .presentationDetents([.medium, .large])
     }
 }

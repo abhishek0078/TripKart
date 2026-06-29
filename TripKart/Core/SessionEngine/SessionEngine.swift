@@ -19,6 +19,13 @@ final class SessionEngine {
         persist(user)
     }
 
+    func updateProfile(name: String, email: String?) {
+        guard let user = currentUser else { return }
+        let updated = User(id: user.id, name: name, phone: user.phone, email: email, avatar: user.avatar)
+        currentUser = updated
+        persist(updated)
+    }
+
     func logout() {
         currentUser = nil
         isAuthenticated = false

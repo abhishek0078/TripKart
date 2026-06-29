@@ -5,11 +5,13 @@ enum HomeDestination: Hashable {
     case search(category: TravelCategory)
     case offerDetail(offer: Offer)
     case results(query: SearchQuery)
+    case notifications
 }
 
 @Observable
 final class HomeCoordinator {
     var path = NavigationPath()
+    var pendingSearchPluginType: String? = nil
 
     func navigateToSearch(category: TravelCategory) {
         path.append(HomeDestination.search(category: category))
@@ -23,9 +25,11 @@ final class HomeCoordinator {
         path.append(HomeDestination.results(query: query))
     }
 
+    func navigateToNotifications() {
+        path.append(HomeDestination.notifications)
+    }
+
     func popToSearch() {
-        if !path.isEmpty {
-            path.removeLast()
-        }
+        if !path.isEmpty { path.removeLast() }
     }
 }

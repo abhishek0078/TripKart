@@ -2,39 +2,63 @@
   "offers": [
     {
       "id": "offer_001",
-      "title": "TRIPKART30",
-      "description": "30% off on your first bus booking",
-      "code": "TRIPKART30",
-      "discount": "30% OFF",
-      "validUntil": "31 Jul 2026",
-      "colorHex": "#2E80F7"
+      "title": "First Booking Offer",
+      "description": "50% off up to ₹200 on your first booking with TripKart",
+      "code": "FIRST50",
+      "discount": "50% OFF",
+      "validUntil": "31 Dec 2026",
+      "colorHex": "#2E80F7",
+      "travelType": "any"
     },
     {
       "id": "offer_002",
-      "title": "FLYLOW500",
-      "description": "Flat ₹500 off on flights above ₹3000",
-      "code": "FLYLOW500",
-      "discount": "₹500 OFF",
-      "validUntil": "15 Jul 2026",
-      "colorHex": "#7C3AED"
+      "title": "Flight Saver",
+      "description": "Flat ₹200 off on all flight bookings above ₹3000",
+      "code": "FLY200",
+      "discount": "₹200 OFF",
+      "validUntil": "15 Sep 2026",
+      "colorHex": "#7C3AED",
+      "travelType": "flight"
     },
     {
       "id": "offer_003",
-      "title": "FIRSTBUS",
-      "description": "Free seat upgrade on your first bus ride",
-      "code": "FIRSTBUS",
-      "discount": "FREE\nUPGRADE",
-      "validUntil": "31 Aug 2026",
-      "colorHex": "#059669"
+      "title": "TripKart Special",
+      "description": "20% off up to ₹300 on any bus or flight booking",
+      "code": "TRIPKART",
+      "discount": "20% OFF",
+      "validUntil": "31 Oct 2026",
+      "colorHex": "#059669",
+      "travelType": "any"
     },
     {
       "id": "offer_004",
-      "title": "WEEKEND20",
-      "description": "20% off on all weekend bookings",
+      "title": "Bus Bonanza",
+      "description": "Flat ₹75 off on all bus bookings above ₹400",
+      "code": "BUS75",
+      "discount": "₹75 OFF",
+      "validUntil": "30 Sep 2026",
+      "colorHex": "#D97706",
+      "travelType": "bus"
+    },
+    {
+      "id": "offer_005",
+      "title": "Weekend Flash Sale",
+      "description": "20% off on bookings made for Sat–Sun travel",
       "code": "WEEKEND20",
       "discount": "20% OFF",
-      "validUntil": "30 Sep 2026",
-      "colorHex": "#D97706"
+      "validUntil": "31 Aug 2026",
+      "colorHex": "#DC2626",
+      "travelType": "any"
+    },
+    {
+      "id": "offer_006",
+      "title": "Flat ₹100 Off",
+      "description": "₹100 off on any booking above ₹400. No questions asked.",
+      "code": "SAVE100",
+      "discount": "₹100 OFF",
+      "validUntil": "31 Dec 2026",
+      "colorHex": "#0891B2",
+      "travelType": "any"
     }
   ]
 }

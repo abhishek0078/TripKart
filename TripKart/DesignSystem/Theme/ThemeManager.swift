@@ -38,7 +38,30 @@ extension Font {
 
 // MARK: - Theme Manager
 
+enum ColorSchemePreference: String, CaseIterable, Codable {
+    case system = "System"
+    case light  = "Light"
+    case dark   = "Dark"
+
+    var colorScheme: ColorScheme? {
+        switch self {
+        case .system: return nil
+        case .light:  return .light
+        case .dark:   return .dark
+        }
+    }
+}
+
 @Observable
 final class ThemeManager {
-    var isDarkMode: Bool = false
+    var colorSchemePreference: ColorSchemePreference = .system {
+        didSet {
+            UserDefaults.standard.set(colorSchemePreference.rawValue, forKey: "tripkart.colorScheme")
+        }
+    }
+
+    init() {
+        let raw = UserDefaults.standard.string(forKey: "tripkart.colorScheme") ?? ""
+        colorSchemePreference = ColorSchemePreference(rawValue: raw) ?? .system
+    }
 }

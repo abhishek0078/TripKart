@@ -58,7 +58,7 @@ struct OfferCardView: View {
         code: "TRIPKART30",
         discount: "30% OFF",
         validUntil: "31 Jul 2026",
-        colorHex: "#2E80F7"
+        colorHex: "#2E80F7", travelType: "flight"
     ))
     .padding()
 }
